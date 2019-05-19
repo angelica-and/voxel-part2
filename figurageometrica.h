@@ -3,10 +3,6 @@
 
 #include "sculptor.h"
 
-/**
- * @brief The GeometricFigure class is an abstract class that serves as a template to all other geometric figures classes defined.
- */
-
 class FiguraGeometrica
 
 {
