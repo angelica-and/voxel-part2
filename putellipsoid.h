@@ -14,6 +14,9 @@ public:
 
     PutEllipsoid(int _xcenter, int _ycenter, int _zcenter, int _rx, int _ry, int _rz, float _r, float _g, float _b, float _a);
     ~PutEllipsoid();
+    /**
+     * @brief Ativa todos os voxels que satisfazem à equação do elipsóide e atribui aos mesmos a cor atual de desenho.
+     */
     void draw(Sculptor &t);
 
 };

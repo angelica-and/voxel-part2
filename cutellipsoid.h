@@ -13,6 +13,9 @@ public:
 
     CutEllipsoid(int _xcenter, int _ycenter, int _zcenter, int _rx, int _ry, int _rz);
     ~CutEllipsoid();
+    /**
+     * @brief Desativa todos os voxels que satisfazem à equação do elipsóide.
+     */
     void draw(Sculptor &t);
 
 };

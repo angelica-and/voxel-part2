@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+//---------------------------
 #include "sculptor.h"
 #include "figurageometrica.h"
 #include "putvoxel.h"
@@ -23,10 +24,13 @@ int main()
     string s;
     stringstream ss;
 
-    fin.open("C:/Users/Angélica/Documents/teste.txt");
+    fin.open("teste.txt");
     if(!fin.is_open()){
         cout<<"Arquivo nao foi aberto"<<endl;
         exit(0);
+    }
+    else {
+        cout<<"Arquivo aberto com sucesso!"<<endl;
     }
 
     while(fin.good()){
@@ -41,6 +45,7 @@ int main()
             int dx, dy, dz;
             ss >> dx >> dy >> dz;
             sculptor = new Sculptor(dx, dy, dz);
+            cout << dx << dy << dz << endl;
         }
 
         else if(s.compare("putbox")==0){
@@ -99,6 +104,9 @@ int main()
     for(int i = 0; i < figs.size(); i++){
         figs[i]->draw(*sculptor);
     }
+
+    (*sculptor).writeVECT("VECT");
+    (*sculptor).writeOFF("OFF");
 
 
     return 0;

@@ -91,109 +91,149 @@ void Sculptor::cutVoxel(int x, int y, int z)
 }
 
 /**
- * @brief Ativa todos os voxels no intervalo [x0,x1],[y0,y1],[z0, z1] e atribui aos mesmos a cor atual de desenho.
+ * @brief Gera um arquivo .OFF
  */
-void Sculptor::putBox(int x0, int x1, int y0, int y1, int z0, int z1)
+//OFF
+void Sculptor::writeOFF(string filename)
 {
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if((i>=x0 && i<=x1)&&(j>=y0 && j<=y1)&&(k>=z0 && k<=z1)){
-                    v[i][j][k].isOn = true;
-                    v[i][j][k].r = r;
-                    v[i][j][k].g = g;
-                    v[i][j][k].b = b;
-                    v[i][j][k].a = a;
-                }
-            }
-        }
-    }
+
+    int n_voxel = 0;
+    ofstream outfile (filename);
+    outfile<<"OFF"<<endl;
+
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if (v[i][j][k].isOn){
+                    n_voxel++;
+                }}}}
+
+
+    outfile << 8*n_voxel << " " << 6*n_voxel << " " << 0 << std::endl;
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if (v[i][j][k].isOn){
+                    outfile << i - 0.5 << " " << j + 0.5 << " " << k - 0.5 << endl;
+                    outfile << i - 0.5 << " " << j - 0.5 << " " << k - 0.5 << endl;
+                    outfile << i + 0.5 << " " << j - 0.5 << " " << k - 0.5 << endl;
+                    outfile << i + 0.5 << " " << j + 0.5 << " " << k - 0.5 << endl;
+                    outfile << i - 0.5 << " " << j + 0.5 << " " << k + 0.5 << endl;
+                    outfile << i - 0.5 << " " << j - 0.5 << " " << k + 0.5 << endl;
+                    outfile << i + 0.5 << " " << j - 0.5 << " " << k + 0.5 << endl;
+                    outfile << i + 0.5 << " " << j + 0.5 << " " << k + 0.5 << endl;
+                }}}}
+
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if (v[i][j][k].isOn){
+                    outfile << 4 << " " << 0 + 8*i << " " << 3 + 8*i << " " << 2 + 8*i << " " << 1 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                    outfile << 4 << " " << 4 + 8*i << " " << 5 + 8*i << " " << 6 + 8*i << " " << 7 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                    outfile << 4 << " " << 0 + 8*i << " " << 1 + 8*i << " " << 5 + 8*i << " " << 4 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                    outfile << 4 << " " << 0 + 8*i << " " << 4 + 8*i << " " << 7 + 8*i << " " << 3 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                    outfile << 4 << " " << 3 + 8*i << " " << 7 + 8*i << " " << 6 + 8*i << " " << 2 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                    outfile << 4 << " " << 1 + 8*i << " " << 2 + 8*i << " " << 6 + 8*i << " " << 5 + 8*i << " " << v[i][j][k].r << " " << v[i][j][k].g << " " << v[i][j][k].b << " " << v[i][j][k].a << " " << endl;
+                }}}}
+
+    outfile.close();
 }
 
 /**
- * @brief Desativa todos os voxels no intervalo [x0,x1],[y0,y1],[z0, z1].
+ * @brief Gera um arquivo .VECT
  */
-void Sculptor::cutBox(int x0, int x1, int y0, int y1, int z0, int z1)
+//VECT
+void Sculptor::writeVECT(string filename)
 {
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if((i>=x0 && i<=x1)&&(j>=y0 && j<=y1)&&(k>=z0 && k<=z1)){
-                    v[i][j][k].isOn = false;
+    int nvox = 0;
+    ofstream outfile (filename);
+    outfile << "VECT" << endl;
+
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if (v[i][j][k].isOn){
+                    nvox++;
                 }
             }
         }
     }
+
+    outfile << nvox << " " << nvox << " " << nvox << endl;
+    for (int i =0;i<nvox; i++) {
+        outfile << "1" <<" ";
+    }
+    outfile << endl;
+    for (int i =0;i<nvox; i++) {
+        outfile << "1" <<" ";
+    }
+    outfile << endl;
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if (v[i][j][k].isOn){
+                    outfile << i <<" "<< j <<" "<< k << endl;
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < nx; i++){
+        for(int j = 0; j < ny; j++){
+            for(int k = 0; k < nz; k++){
+                if(v[i][j][k].isOn){
+                    outfile << v[i][j][k].r <<" "<< v[i][j][k].g <<" "<< v[i][j][k].b <<" "<< v[i][j][k].a << endl;
+                }
+            }
+        }
+    }
+
+    outfile.close();
 }
 
-/**
- * @brief Ativa todos os voxels que satisfazem à equação do elipsóide e atribui aos mesmos a cor atual de desenho.
- */
-void Sculptor::putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)
-{
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if(((pow((i - xcenter),2)/(float)pow(rx,2) + (pow((j - ycenter),2))/(float)pow(ry,2) + (pow((k - zcenter),2))/(float)pow(rz,2)) <= 1)){
-                    v[i][j][k].isOn = true;
-                    v[i][j][k].r = r;
-                    v[i][j][k].g = g;
-                    v[i][j][k].b = b;
-                    v[i][j][k].a = a;
-                }
-            }
-        }
-    }
-}
 
-/**
- * @brief Desativa todos os voxels que satisfazem à equação do elipsóide.
- */
-void Sculptor::cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)
+//DIM
+/*void Sculptor::writeDIM(string filename)
 {
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if(((pow((i - xcenter),2)/(float)pow(rx,2) + (pow((j - ycenter),2))/(float)pow(ry,2) + (pow((k - zcenter),2))/(float)pow(rz,2)) <= 1)){
-                    v[i][j][k].isOn = false;
-                }
+    int nvoxel = 0;
+    int d[nx][ny][nz];
+    bool x_teste = false, y_teste = false, z_teste = false;
+    int i,j,k;
+    for(i=0;i<nx;i++){
+        for(j=0;j<ny;j++){
+            for(k=0;k<nz;k++){
+                d[i][j][k] = 0;
             }
         }
     }
-}
+    ofstream outfile(filename);
+    outfile<< "DIM " << " " << nx << " " << ny << " " << nz << endl;
+    for(i=0;i<nx-2;i++){
+        for(j=0;j<ny-2;j++){
+            for(k=0;k<nz-2;k++){
+                x_teste = false; y_teste = false; z_teste = false;
+                if(v[i][j][k].isOn && v[i+2][j][k].isOn){
+                    x_teste = true;
+                }
+                if(v[i][j][k].isOn && v[i][j+2][k].isOn){
+                    x_teste = true;
+                }
+                if(v[i][j][k].isOn && v[i][j][k+2].isOn){
+                    z_teste = true;
+                }
+                if(x_teste || x_teste || z_teste){
+                    d[i+1][j+1][k+1] = 1;
+                }}}}
 
-/**
- * @brief Ativa todos os voxels que satisfazem à equação da esfera e atribui aos mesmos a cor atual de desenho (r,g,b,a).
- */
-void Sculptor::putSphere(int xcenter, int ycenter, int zcenter, int radius)
-{
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if(((i - xcenter)*(i - xcenter) + (j - ycenter)*(j - ycenter) + (k - zcenter)*(k - zcenter)) <= radius*radius){
-                    v[i][j][k].isOn = true;
-                    v[i][j][k].r = r;
-                    v[i][j][k].g = g;
-                    v[i][j][k].b = b;
-                    v[i][j][k].a = a;
-                }
-            }
-        }
-    }
-}
 
-/**
- * @brief Desativa todos os voxels que satisfazem à equação da esfera.
- */
-void Sculptor::cutSphere(int xcenter, int ycenter, int zcenter, int radius)
-{
-    for(int i = 0; i<nx; i++){
-        for(int j = 0; j<ny; j++){
-            for(int k = 0; k<nz; k++){
-                if(((i - xcenter)*(i - xcenter) + (j - ycenter)*(j - ycenter) + (k - zcenter)*(k - zcenter)) <= radius*radius){
-                    v[i][j][k].isOn = false;
-                }
-            }
-        }
-    }
-}
+    for(i = 0; i < nx; i++){
+        for(j = 0; j < ny; j++){
+            for(k = 0; k < nz; k++){
+                if (v[i][j][k].isOn && d[i][j][k] == 0){
+                    nvoxel++;
+                }}}}
+
+    outfile << nvoxel << " " << nvoxel << " " << nvoxel << endl;
+
+*/
+

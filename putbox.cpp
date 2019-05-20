@@ -1,5 +1,13 @@
 #include "putbox.h"
 
+/**
+ * @brief Classe PutBox
+ */
+
+
+/**
+ * @brief Construtor da classe PutBox
+ */
 PutBox::PutBox(int _x0, int _x1, int _y0, int _y1, int _z0, int _z1, float _r, float _g, float _b, float _a)
 {
     x0 = _x0;
@@ -14,11 +22,16 @@ PutBox::PutBox(int _x0, int _x1, int _y0, int _y1, int _z0, int _z1, float _r, f
     a = _a;
 }
 
+/**
+ * @brief Destrutor da classe PutBox
+ */
 PutBox::~PutBox()
 {
 
 }
-
+/**
+ * @brief Ativa todos os voxels no intervalo [x0,x1],[y0,y1],[z0, z1] e atribui aos mesmos a cor atual de desenho.
+ */
 void PutBox::draw(Sculptor &t)
 {
     for(int i = x0; i<=x1; i++){

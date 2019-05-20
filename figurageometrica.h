@@ -3,6 +3,12 @@
 
 #include "sculptor.h"
 
+/**
+ * @brief Classe abstrata FiguraGeometrica. Serve como base para
+ * todas as outras classes definidas que têm como objetivo desenhar
+ * figuras.
+ */
+
 class FiguraGeometrica
 
 {
@@ -10,8 +16,8 @@ class FiguraGeometrica
 public:
 
   FiguraGeometrica();
-  virtual ~FiguraGeometrica(); // virtual destructor
-  virtual void draw(Sculptor &t)=0; //pure virtual class (has to be implemented by all derived classes)
+  virtual ~FiguraGeometrica();
+  virtual void draw(Sculptor &t)=0;
 
 };
 

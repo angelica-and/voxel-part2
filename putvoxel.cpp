@@ -1,5 +1,12 @@
 #include "putvoxel.h"
 
+/**
+ * @brief Classe PutVoxel
+ */
+
+/**
+ * @brief Construtor da classe PutVoxel
+ */
 PutVoxel::PutVoxel(int _x, int _y, int _z, float _r, float _g, float _b, float _a)
 {
     x = _x;
@@ -11,6 +18,9 @@ PutVoxel::PutVoxel(int _x, int _y, int _z, float _r, float _g, float _b, float _
     a = _a;
 }
 
+/**
+ * @brief Destrutor da classe PutVoxel
+ */
 PutVoxel::~PutVoxel()
 {
 
